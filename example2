@@ -1,0 +1,22 @@
+# run a step after the workflow succeeded
+version: '1.0'
+mode: parallel
+fail_fast: false
+
+steps:
+
+  step1:
+    title: step1
+    image: alpine
+    commands:
+    - echo hello
+    when:
+      condition:
+        any:
+          mycondition: workflow.status == 'success' # can use failure too
+
+  step2:
+    title: step2
+    image: alpine
+    commands:
+    - exit 0
