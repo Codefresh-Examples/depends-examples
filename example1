@@ -1,0 +1,26 @@
+# step1 should execute if step2 succeeded
+version: '1.0'
+mode: parallel
+fail_fast: false
+success_criteria:
+  steps:
+    ignore:
+      - step2
+
+steps:
+
+  step1:
+    title: step1
+    image: alpine
+    commands:
+    - echo hello
+    when:
+      condition:
+        any:
+          mycondition: step2.status == 'success'
+
+  step2:
+    title: step2
+    image: alpine
+    commands:
+    - exit 0 #switch to 1 to check behaviour
